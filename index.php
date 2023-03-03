@@ -9,3 +9,15 @@ $log = '[' . $_SERVER['SCRIPT_NAME'] . ']';
 
 require("config.php");
 require("domains.php");
+
+error_log($log . $_GET['rewrite_uri'], 3, "/var/log/php/php_error.log");
+
+if ($_GET['rewrite_uri'] == 'domains.php') {
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+        // GET送信されたリクエストパラメータです
+        getDomainsExist();
+    } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // POST送信されたリクエストパラメータです
+        createDomains();
+    }
+}
