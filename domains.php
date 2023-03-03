@@ -3,7 +3,7 @@ $domain_name = $_GET['domain'];
 error_log($log . $domain_name);
 
 try {
-    $sql = 'SELECT domain_name FROM v_domains WHERE domain_name = :domain_name';
+    $sql = 'SELECT * FROM v_domains WHERE domain_name = :domain_name';
     $stmh = $pdo->prepare($sql);
     $stmh->bindValue(':domain_name', $domain_name, PDO::PARAM_STR);
     $stmh->execute();
