@@ -8,6 +8,6 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 } catch (Exception $exception) {
-    error_log($log . 'エラー:' . $exception->getMessage());
+    syslog(LOG_ERR, 'エラー:' . $exception->getMessage());
     die();
 }

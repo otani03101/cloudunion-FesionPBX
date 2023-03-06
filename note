@@ -1,0 +1,9 @@
+【情報取得】
+URL
+https://18.181.224.255/api/domains.php?domain=172.31.12.233
+
+コマンド
+curl 'https://18.181.224.255/api/index.php?domain=172.31.12.233'
+
+【新規作成コマンド】
+curl --insecure -X POST -H "Content-Type: application/json" -d '{"CreateDomain": "DomainName.flatline.jp"}' https://18.181.224.255/api/domains.php

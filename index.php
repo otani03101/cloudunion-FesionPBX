@@ -1,23 +1,22 @@
 <?php
-ini_set("display_errors", 1);
-ini_set("error_reporting", E_ALL);
-ini_set("log_errors", "on");
-ini_set("error_log", "/var/log/php/php_error.log");
-ini_set("date.timezone", "Asia/Tokyo");
+require_once("config.php");
+require_once("domains.php");
 
-$log = '[' . $_SERVER['SCRIPT_NAME'] . ']';
+syslog(LOG_DEBUG,$_GET['rewrite_uri']);
 
-require("config.php");
-require("domains.php");
-
-error_log($log . $_GET['rewrite_uri'], 3, "/var/log/php/php_error.log");
-
-if ($_GET['rewrite_uri'] == 'domains.php') {
-    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-        // GET送信されたリクエストパラメータです
-        getDomainsExist();
-    } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // POST送信されたリクエストパラメータです
-        createDomains();
-    }
+switch ($_GET['rewrite_uri']) {
+    case 'domains.php';
+        switch ($_SERVER['REQUEST_METHOD']) {
+            case 'GET':
+                getDomainsExist();
+                break;
+            case 'POST':
+                createDomains();
+                break;
+        }
+        break;
+    case 'extensions.php':
+        break;
+    case 'ring_groups.php':
+        break;
 }
