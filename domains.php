@@ -15,14 +15,24 @@ function getDomainsExist()
         syslog(LOG_ERR, 'エラー:' . $exception->getMessage());
     }
 
-//    enabledがtrueかfalseかをチェック
+    $row = $stmh->fetch(PDO::FETCH_ASSOC);
+    $enabled = $row['domain_enabled'];
 
     if ($count > 0) {
-        $value_array = ['DomainName' => true];
-        $jsonstr = json_encode($value_array);
-        echo $jsonstr;
+        switch ($enabled) {
+            case true:
+                $value_array = ['DomainName' => true, 'Enabled' => true];
+                $jsonstr = json_encode($value_array);
+                echo $jsonstr;
+                break;
+            case false:
+                $value_array = ['DomainName' => true, 'Enabled' => false];
+                $jsonstr = json_encode($value_array);
+                echo $jsonstr;
+                break;
+        }
     } else {
-        $value_array = ['DomainName' => false];
+        $value_array = ['DomainName' => false, 'Enabled' => false];
         $jsonstr = json_encode($value_array);
         echo $jsonstr;
     }
@@ -30,7 +40,7 @@ function getDomainsExist()
 
 function createDomains()
 {
-    require_once ("uuid.php");
+    require_once("uuid.php");
 
     global $pdo;
 
